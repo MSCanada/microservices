@@ -1,0 +1,11 @@
+web:
+  build: .
+  environment:
+    ENV: PROD 
+  ports:
+    - "3000:3000"
+  links:
+    - "db:mongo"
+
+db:
+  image: mongo

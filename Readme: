@@ -1,0 +1,21 @@
+Readme:
+docker-machine create -d virtualbox host1-consul
+docker $(docker-machine config host1-consul) run -d -p "8500:8500" -h "consul" progrium/consul -server -bootstrap
+docker-machine create -d virtualbox  --engine-opt="cluster-store=consul://$(docker-machine ip host1-consul):8500" --engine-opt="cluster-advertise=eth1:0" host2
+docker-machine create -d virtualbox  --engine-opt="cluster-store=consul://$(docker-machine ip host1-consul):8500" --engine-opt="cluster-advertise=eth1:0" host3
+docker-machine create -d virtualbox  --engine-opt="cluster-store=consul://$(docker-machine ip host1-consul):8500" --engine-opt="cluster-advertise=eth1:0" host4
+docker $(docker-machine config host2) network create -d overlay myapp
+
+eval $(docker-machine env host2)
+navigate to apigateway folder >> docker build -t apigateway .
+>> docker run -p 8085:8085 -p 3000:3000 apigateway
+
+eval $(docker-machine env host3)
+navigate to ProductManagerecommerce folder >> docker-compose build
+>> docker-compose up
+
+eval $(docker-machine env host3)
+navigate to OrderManagerecommerce folder >> docker-compose build
+>> docker-compose up
+
+http://192.168.99.101/api/enpoints...
